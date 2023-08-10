@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tugas 2 Jam dan Alarm</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>  
+        <div id="app">
+            <p id = "date">
+            </p>
+            <p class="time">
+              {{ ('0' + (time.getHours()  != 12 ? time.getHours() % 12 : 12)).slice(-2) }}:{{ ('0' + time.getMinutes()).slice(-2) }}:{{ ('0' + time.getSeconds()).slice(-2)   }} {{ time.getHours() >= 12 ? 'PM' : 'AM' }}
+            </p>
+            <h2>
+                Set Your Alarm
+            </h2>
+
+            <select id="hour">
+              <option>12</option>
+              <option v-for="i in 1,11">{{ ('0' + i).slice(-2) }}</option>
+            </select>:<select id="minute">
+              <option v-for="i in 60">{{ ('0' + (i-1)).slice(-2) }}</option>
+            </select>
+            <select id="am_pm">
+              <option>AM</option>
+              <option>PM</option>
+            </select> 
+            <strong>For:</strong>
+            <input type="text" id="alarm_message" @keyup.enter="saveAlarm" />
+            <button v-on:click="saveAlarm">Save alarm</button>
+            
+            <table>
+              <tr v-for="(alarm, i) in alarms">
+                <td>{{alarm.hour}}:{{('0' + alarm.minute).slice(-2) }} {{alarm.am_pm}} {{ alarm.message }}</td>
+                <td><button id="btn" v-on:click="enableAlarm(i)">Enable</button>
+                <td><button v-on:click="deleteAlarm(i)">Delete</button>
+              </tr>
+            </table>
+
+            <Button v-on:click="stopAlarm" v-if="alarm_going_off" style="background:rgba(10, 175, 230, 0);color:#FFF;width:75%;text-align:center;font-size:2em;border-color:#0aafe6;">Stop alarm</Button>
+          </div>
+           
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+           
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js"></script>
+
+          <script src = "script.js"></script>
+    </body>
+</html>
